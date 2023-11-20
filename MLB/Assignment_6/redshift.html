@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>redshift</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="redshift_files/libs/clipboard/clipboard.min.js"></script>
+<script src="redshift_files/libs/quarto-html/quarto.js"></script>
+<script src="redshift_files/libs/quarto-html/popper.min.js"></script>
+<script src="redshift_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="redshift_files/libs/quarto-html/anchor.min.js"></script>
+<link href="redshift_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="redshift_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="redshift_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="redshift_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="redshift_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xgboost <span class="im">as</span> xgb</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">"quasars.csv"</span>, delimiter <span class="op">=</span> <span class="st">","</span>) <span class="co"># load data</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> data[:,<span class="dv">10</span>] <span class="co"># Labels </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> data[:, <span class="dv">0</span>:<span class="dv">10</span>] <span class="co"># Features</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">120</span>) <span class="co"># split into training and test set</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>X_train_1, X_eval_1, y_train_1, y_eval_1 <span class="op">=</span> train_test_split(X_train, y_train, test_size<span class="op">=</span><span class="fl">0.1</span>, random_state<span class="op">=</span><span class="dv">120</span>) <span class="co"># split into training and validation set</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>reg <span class="op">=</span> xgb.XGBRegressor(colsample_bytree<span class="op">=</span><span class="fl">0.5</span>, learning_rate<span class="op">=</span><span class="fl">0.1</span>, max_depth<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>reg_lambda<span class="op">=</span><span class="dv">1</span>, n_estimators<span class="op">=</span><span class="dv">500</span>) <span class="co"># Initialise XGBRegressor, with specified parameters</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>reg.fit(X_train_1, y_train_1, eval_set<span class="op">=</span>[(X_eval_1, y_eval_1), (X_train_1, y_train_1)]) <span class="co"># Fit XGBRegressor to training set and evaluate validation error on validation set</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[0] validation_0-rmse:0.63016   validation_1-rmse:0.64193
+[1] validation_0-rmse:0.61302   validation_1-rmse:0.62328
+[2] validation_0-rmse:0.59994   validation_1-rmse:0.60784
+[3] validation_0-rmse:0.58641   validation_1-rmse:0.59402
+[4] validation_0-rmse:0.57616   validation_1-rmse:0.58212
+[5] validation_0-rmse:0.56638   validation_1-rmse:0.57222
+[6] validation_0-rmse:0.55837   validation_1-rmse:0.56363
+[7] validation_0-rmse:0.55225   validation_1-rmse:0.55648
+[8] validation_0-rmse:0.54670   validation_1-rmse:0.54955
+[9] validation_0-rmse:0.54187   validation_1-rmse:0.54390
+[10]    validation_0-rmse:0.53720   validation_1-rmse:0.53919
+[11]    validation_0-rmse:0.53460   validation_1-rmse:0.53584
+[12]    validation_0-rmse:0.53142   validation_1-rmse:0.53221
+[13]    validation_0-rmse:0.52917   validation_1-rmse:0.52909
+[14]    validation_0-rmse:0.52753   validation_1-rmse:0.52573
+[15]    validation_0-rmse:0.52513   validation_1-rmse:0.52305
+[16]    validation_0-rmse:0.52355   validation_1-rmse:0.52081
+[17]    validation_0-rmse:0.52246   validation_1-rmse:0.51890
+[18]    validation_0-rmse:0.52091   validation_1-rmse:0.51648
+[19]    validation_0-rmse:0.52019   validation_1-rmse:0.51525
+[20]    validation_0-rmse:0.51951   validation_1-rmse:0.51420
+[21]    validation_0-rmse:0.51881   validation_1-rmse:0.51312
+[22]    validation_0-rmse:0.51931   validation_1-rmse:0.51115
+[23]    validation_0-rmse:0.51870   validation_1-rmse:0.51003
+[24]    validation_0-rmse:0.51873   validation_1-rmse:0.50825
+[25]    validation_0-rmse:0.51847   validation_1-rmse:0.50740
+[26]    validation_0-rmse:0.51789   validation_1-rmse:0.50597
+[27]    validation_0-rmse:0.51860   validation_1-rmse:0.50415
+[28]    validation_0-rmse:0.51920   validation_1-rmse:0.50299
+[29]    validation_0-rmse:0.51956   validation_1-rmse:0.50188
+[30]    validation_0-rmse:0.51937   validation_1-rmse:0.50100
+[31]    validation_0-rmse:0.51926   validation_1-rmse:0.49933
+[32]    validation_0-rmse:0.51981   validation_1-rmse:0.49863
+[33]    validation_0-rmse:0.52053   validation_1-rmse:0.49720
+[34]    validation_0-rmse:0.51992   validation_1-rmse:0.49589
+[35]    validation_0-rmse:0.52004   validation_1-rmse:0.49434
+[36]    validation_0-rmse:0.51987   validation_1-rmse:0.49400
+[37]    validation_0-rmse:0.51971   validation_1-rmse:0.49286
+[38]    validation_0-rmse:0.52049   validation_1-rmse:0.49161
+[39]    validation_0-rmse:0.52068   validation_1-rmse:0.49067
+[40]    validation_0-rmse:0.52089   validation_1-rmse:0.48985
+[41]    validation_0-rmse:0.52122   validation_1-rmse:0.48887
+[42]    validation_0-rmse:0.52089   validation_1-rmse:0.48735
+[43]    validation_0-rmse:0.52100   validation_1-rmse:0.48637
+[44]    validation_0-rmse:0.52082   validation_1-rmse:0.48593
+[45]    validation_0-rmse:0.52086   validation_1-rmse:0.48547
+[46]    validation_0-rmse:0.52090   validation_1-rmse:0.48459
+[47]    validation_0-rmse:0.52101   validation_1-rmse:0.48367
+[48]    validation_0-rmse:0.52192   validation_1-rmse:0.48293
+[49]    validation_0-rmse:0.52216   validation_1-rmse:0.48140
+[50]    validation_0-rmse:0.52261   validation_1-rmse:0.48095
+[51]    validation_0-rmse:0.52238   validation_1-rmse:0.47985
+[52]    validation_0-rmse:0.52247   validation_1-rmse:0.47972
+[53]    validation_0-rmse:0.52274   validation_1-rmse:0.47901
+[54]    validation_0-rmse:0.52307   validation_1-rmse:0.47818
+[55]    validation_0-rmse:0.52346   validation_1-rmse:0.47748
+[56]    validation_0-rmse:0.52440   validation_1-rmse:0.47682
+[57]    validation_0-rmse:0.52449   validation_1-rmse:0.47589
+[58]    validation_0-rmse:0.52451   validation_1-rmse:0.47495
+[59]    validation_0-rmse:0.52453   validation_1-rmse:0.47425
+[60]    validation_0-rmse:0.52434   validation_1-rmse:0.47329
+[61]    validation_0-rmse:0.52448   validation_1-rmse:0.47219
+[62]    validation_0-rmse:0.52501   validation_1-rmse:0.47131
+[63]    validation_0-rmse:0.52393   validation_1-rmse:0.47038
+[64]    validation_0-rmse:0.52427   validation_1-rmse:0.46982
+[65]    validation_0-rmse:0.52418   validation_1-rmse:0.46834
+[66]    validation_0-rmse:0.52344   validation_1-rmse:0.46768
+[67]    validation_0-rmse:0.52330   validation_1-rmse:0.46748
+[68]    validation_0-rmse:0.52377   validation_1-rmse:0.46708
+[69]    validation_0-rmse:0.52386   validation_1-rmse:0.46650
+[70]    validation_0-rmse:0.52384   validation_1-rmse:0.46598
+[71]    validation_0-rmse:0.52431   validation_1-rmse:0.46543
+[72]    validation_0-rmse:0.52399   validation_1-rmse:0.46478
+[73]    validation_0-rmse:0.52436   validation_1-rmse:0.46356
+[74]    validation_0-rmse:0.52529   validation_1-rmse:0.46273
+[75]    validation_0-rmse:0.52444   validation_1-rmse:0.46166
+[76]    validation_0-rmse:0.52473   validation_1-rmse:0.46032
+[77]    validation_0-rmse:0.52448   validation_1-rmse:0.45981
+[78]    validation_0-rmse:0.52487   validation_1-rmse:0.45921
+[79]    validation_0-rmse:0.52510   validation_1-rmse:0.45873
+[80]    validation_0-rmse:0.52516   validation_1-rmse:0.45782
+[81]    validation_0-rmse:0.52523   validation_1-rmse:0.45730
+[82]    validation_0-rmse:0.52416   validation_1-rmse:0.45648
+[83]    validation_0-rmse:0.52451   validation_1-rmse:0.45573
+[84]    validation_0-rmse:0.52465   validation_1-rmse:0.45535
+[85]    validation_0-rmse:0.52514   validation_1-rmse:0.45491
+[86]    validation_0-rmse:0.52471   validation_1-rmse:0.45403
+[87]    validation_0-rmse:0.52452   validation_1-rmse:0.45362
+[88]    validation_0-rmse:0.52468   validation_1-rmse:0.45341
+[89]    validation_0-rmse:0.52442   validation_1-rmse:0.45298
+[90]    validation_0-rmse:0.52294   validation_1-rmse:0.45178
+[91]    validation_0-rmse:0.52304   validation_1-rmse:0.45110
+[92]    validation_0-rmse:0.52324   validation_1-rmse:0.45089
+[93]    validation_0-rmse:0.52189   validation_1-rmse:0.44973
+[94]    validation_0-rmse:0.52194   validation_1-rmse:0.44953
+[95]    validation_0-rmse:0.52160   validation_1-rmse:0.44873
+[96]    validation_0-rmse:0.52079   validation_1-rmse:0.44809
+[97]    validation_0-rmse:0.52066   validation_1-rmse:0.44766
+[98]    validation_0-rmse:0.51999   validation_1-rmse:0.44666
+[99]    validation_0-rmse:0.52002   validation_1-rmse:0.44612
+[100]   validation_0-rmse:0.52043   validation_1-rmse:0.44591
+[101]   validation_0-rmse:0.52043   validation_1-rmse:0.44583
+[102]   validation_0-rmse:0.52074   validation_1-rmse:0.44488
+[103]   validation_0-rmse:0.52045   validation_1-rmse:0.44431
+[104]   validation_0-rmse:0.52038   validation_1-rmse:0.44404
+[105]   validation_0-rmse:0.52057   validation_1-rmse:0.44387
+[106]   validation_0-rmse:0.52034   validation_1-rmse:0.44364
+[107]   validation_0-rmse:0.52031   validation_1-rmse:0.44323
+[108]   validation_0-rmse:0.52055   validation_1-rmse:0.44271
+[109]   validation_0-rmse:0.52072   validation_1-rmse:0.44216
+[110]   validation_0-rmse:0.52123   validation_1-rmse:0.44165
+[111]   validation_0-rmse:0.52124   validation_1-rmse:0.44118
+[112]   validation_0-rmse:0.51967   validation_1-rmse:0.44007
+[113]   validation_0-rmse:0.51979   validation_1-rmse:0.43996
+[114]   validation_0-rmse:0.51954   validation_1-rmse:0.43933
+[115]   validation_0-rmse:0.51982   validation_1-rmse:0.43885
+[116]   validation_0-rmse:0.51899   validation_1-rmse:0.43822
+[117]   validation_0-rmse:0.51947   validation_1-rmse:0.43712
+[118]   validation_0-rmse:0.51885   validation_1-rmse:0.43613
+[119]   validation_0-rmse:0.51876   validation_1-rmse:0.43504
+[120]   validation_0-rmse:0.51894   validation_1-rmse:0.43456
+[121]   validation_0-rmse:0.51938   validation_1-rmse:0.43434
+[122]   validation_0-rmse:0.51909   validation_1-rmse:0.43304
+[123]   validation_0-rmse:0.51929   validation_1-rmse:0.43292
+[124]   validation_0-rmse:0.51892   validation_1-rmse:0.43262
+[125]   validation_0-rmse:0.51884   validation_1-rmse:0.43224
+[126]   validation_0-rmse:0.51649   validation_1-rmse:0.43138
+[127]   validation_0-rmse:0.51606   validation_1-rmse:0.43059
+[128]   validation_0-rmse:0.51606   validation_1-rmse:0.43052
+[129]   validation_0-rmse:0.51617   validation_1-rmse:0.43005
+[130]   validation_0-rmse:0.51652   validation_1-rmse:0.42975
+[131]   validation_0-rmse:0.51668   validation_1-rmse:0.42915
+[132]   validation_0-rmse:0.51691   validation_1-rmse:0.42875
+[133]   validation_0-rmse:0.51709   validation_1-rmse:0.42864
+[134]   validation_0-rmse:0.51677   validation_1-rmse:0.42806
+[135]   validation_0-rmse:0.51690   validation_1-rmse:0.42797
+[136]   validation_0-rmse:0.51713   validation_1-rmse:0.42765
+[137]   validation_0-rmse:0.51739   validation_1-rmse:0.42747
+[138]   validation_0-rmse:0.51726   validation_1-rmse:0.42695
+[139]   validation_0-rmse:0.51691   validation_1-rmse:0.42637
+[140]   validation_0-rmse:0.51704   validation_1-rmse:0.42561
+[141]   validation_0-rmse:0.51670   validation_1-rmse:0.42489
+[142]   validation_0-rmse:0.51649   validation_1-rmse:0.42420
+[143]   validation_0-rmse:0.51644   validation_1-rmse:0.42377
+[144]   validation_0-rmse:0.51553   validation_1-rmse:0.42256
+[145]   validation_0-rmse:0.51498   validation_1-rmse:0.42162
+[146]   validation_0-rmse:0.51470   validation_1-rmse:0.42104
+[147]   validation_0-rmse:0.51465   validation_1-rmse:0.42095
+[148]   validation_0-rmse:0.51488   validation_1-rmse:0.42071
+[149]   validation_0-rmse:0.51488   validation_1-rmse:0.42034
+[150]   validation_0-rmse:0.51460   validation_1-rmse:0.42002
+[151]   validation_0-rmse:0.51457   validation_1-rmse:0.41965
+[152]   validation_0-rmse:0.51453   validation_1-rmse:0.41959
+[153]   validation_0-rmse:0.51421   validation_1-rmse:0.41861
+[154]   validation_0-rmse:0.51406   validation_1-rmse:0.41803
+[155]   validation_0-rmse:0.51392   validation_1-rmse:0.41762
+[156]   validation_0-rmse:0.51370   validation_1-rmse:0.41717
+[157]   validation_0-rmse:0.51359   validation_1-rmse:0.41673
+[158]   validation_0-rmse:0.51354   validation_1-rmse:0.41663
+[159]   validation_0-rmse:0.51338   validation_1-rmse:0.41623
+[160]   validation_0-rmse:0.51299   validation_1-rmse:0.41581
+[161]   validation_0-rmse:0.51307   validation_1-rmse:0.41571
+[162]   validation_0-rmse:0.51269   validation_1-rmse:0.41547
+[163]   validation_0-rmse:0.51281   validation_1-rmse:0.41491
+[164]   validation_0-rmse:0.51339   validation_1-rmse:0.41452
+[165]   validation_0-rmse:0.51349   validation_1-rmse:0.41394
+[166]   validation_0-rmse:0.51333   validation_1-rmse:0.41311
+[167]   validation_0-rmse:0.51331   validation_1-rmse:0.41257
+[168]   validation_0-rmse:0.51327   validation_1-rmse:0.41225
+[169]   validation_0-rmse:0.51280   validation_1-rmse:0.41184
+[170]   validation_0-rmse:0.51217   validation_1-rmse:0.41073
+[171]   validation_0-rmse:0.51241   validation_1-rmse:0.41056
+[172]   validation_0-rmse:0.51248   validation_1-rmse:0.41053
+[173]   validation_0-rmse:0.51267   validation_1-rmse:0.40967
+[174]   validation_0-rmse:0.51285   validation_1-rmse:0.40877
+[175]   validation_0-rmse:0.51271   validation_1-rmse:0.40869
+[176]   validation_0-rmse:0.51239   validation_1-rmse:0.40813
+[177]   validation_0-rmse:0.51229   validation_1-rmse:0.40753
+[178]   validation_0-rmse:0.51216   validation_1-rmse:0.40712
+[179]   validation_0-rmse:0.51168   validation_1-rmse:0.40641
+[180]   validation_0-rmse:0.51201   validation_1-rmse:0.40596
+[181]   validation_0-rmse:0.51249   validation_1-rmse:0.40548
+[182]   validation_0-rmse:0.51277   validation_1-rmse:0.40506
+[183]   validation_0-rmse:0.51284   validation_1-rmse:0.40452
+[184]   validation_0-rmse:0.51300   validation_1-rmse:0.40410
+[185]   validation_0-rmse:0.51283   validation_1-rmse:0.40353
+[186]   validation_0-rmse:0.51251   validation_1-rmse:0.40296
+[187]   validation_0-rmse:0.51242   validation_1-rmse:0.40255
+[188]   validation_0-rmse:0.51223   validation_1-rmse:0.40224
+[189]   validation_0-rmse:0.51254   validation_1-rmse:0.40169
+[190]   validation_0-rmse:0.51237   validation_1-rmse:0.40111
+[191]   validation_0-rmse:0.51214   validation_1-rmse:0.40034
+[192]   validation_0-rmse:0.51202   validation_1-rmse:0.39968
+[193]   validation_0-rmse:0.51194   validation_1-rmse:0.39934
+[194]   validation_0-rmse:0.51139   validation_1-rmse:0.39861
+[195]   validation_0-rmse:0.51085   validation_1-rmse:0.39777
+[196]   validation_0-rmse:0.51099   validation_1-rmse:0.39772
+[197]   validation_0-rmse:0.51085   validation_1-rmse:0.39742
+[198]   validation_0-rmse:0.51092   validation_1-rmse:0.39740
+[199]   validation_0-rmse:0.51034   validation_1-rmse:0.39667
+[200]   validation_0-rmse:0.51067   validation_1-rmse:0.39653
+[201]   validation_0-rmse:0.51069   validation_1-rmse:0.39636
+[202]   validation_0-rmse:0.51086   validation_1-rmse:0.39632
+[203]   validation_0-rmse:0.51095   validation_1-rmse:0.39628
+[204]   validation_0-rmse:0.51045   validation_1-rmse:0.39562
+[205]   validation_0-rmse:0.51053   validation_1-rmse:0.39507
+[206]   validation_0-rmse:0.51055   validation_1-rmse:0.39487
+[207]   validation_0-rmse:0.51033   validation_1-rmse:0.39439
+[208]   validation_0-rmse:0.50972   validation_1-rmse:0.39399
+[209]   validation_0-rmse:0.50989   validation_1-rmse:0.39332
+[210]   validation_0-rmse:0.50961   validation_1-rmse:0.39296
+[211]   validation_0-rmse:0.50943   validation_1-rmse:0.39255
+[212]   validation_0-rmse:0.50943   validation_1-rmse:0.39229
+[213]   validation_0-rmse:0.50908   validation_1-rmse:0.39201
+[214]   validation_0-rmse:0.50918   validation_1-rmse:0.39132
+[215]   validation_0-rmse:0.50930   validation_1-rmse:0.39110
+[216]   validation_0-rmse:0.50936   validation_1-rmse:0.39100
+[217]   validation_0-rmse:0.50960   validation_1-rmse:0.39095
+[218]   validation_0-rmse:0.50967   validation_1-rmse:0.39073
+[219]   validation_0-rmse:0.51002   validation_1-rmse:0.39052
+[220]   validation_0-rmse:0.51025   validation_1-rmse:0.39012
+[221]   validation_0-rmse:0.51025   validation_1-rmse:0.38976
+[222]   validation_0-rmse:0.50940   validation_1-rmse:0.38942
+[223]   validation_0-rmse:0.50918   validation_1-rmse:0.38906
+[224]   validation_0-rmse:0.50908   validation_1-rmse:0.38852
+[225]   validation_0-rmse:0.50882   validation_1-rmse:0.38807
+[226]   validation_0-rmse:0.50892   validation_1-rmse:0.38765
+[227]   validation_0-rmse:0.50891   validation_1-rmse:0.38757
+[228]   validation_0-rmse:0.50855   validation_1-rmse:0.38673
+[229]   validation_0-rmse:0.50751   validation_1-rmse:0.38556
+[230]   validation_0-rmse:0.50665   validation_1-rmse:0.38482
+[231]   validation_0-rmse:0.50651   validation_1-rmse:0.38442
+[232]   validation_0-rmse:0.50619   validation_1-rmse:0.38344
+[233]   validation_0-rmse:0.50617   validation_1-rmse:0.38314
+[234]   validation_0-rmse:0.50655   validation_1-rmse:0.38287
+[235]   validation_0-rmse:0.50685   validation_1-rmse:0.38275
+[236]   validation_0-rmse:0.50679   validation_1-rmse:0.38227
+[237]   validation_0-rmse:0.50716   validation_1-rmse:0.38194
+[238]   validation_0-rmse:0.50728   validation_1-rmse:0.38173
+[239]   validation_0-rmse:0.50714   validation_1-rmse:0.38138
+[240]   validation_0-rmse:0.50711   validation_1-rmse:0.38087
+[241]   validation_0-rmse:0.50655   validation_1-rmse:0.38042
+[242]   validation_0-rmse:0.50646   validation_1-rmse:0.37982
+[243]   validation_0-rmse:0.50654   validation_1-rmse:0.37975
+[244]   validation_0-rmse:0.50645   validation_1-rmse:0.37937
+[245]   validation_0-rmse:0.50649   validation_1-rmse:0.37911
+[246]   validation_0-rmse:0.50645   validation_1-rmse:0.37853
+[247]   validation_0-rmse:0.50675   validation_1-rmse:0.37822
+[248]   validation_0-rmse:0.50701   validation_1-rmse:0.37805
+[249]   validation_0-rmse:0.50713   validation_1-rmse:0.37743
+[250]   validation_0-rmse:0.50693   validation_1-rmse:0.37685
+[251]   validation_0-rmse:0.50697   validation_1-rmse:0.37667
+[252]   validation_0-rmse:0.50699   validation_1-rmse:0.37661
+[253]   validation_0-rmse:0.50694   validation_1-rmse:0.37652
+[254]   validation_0-rmse:0.50684   validation_1-rmse:0.37647
+[255]   validation_0-rmse:0.50694   validation_1-rmse:0.37639
+[256]   validation_0-rmse:0.50689   validation_1-rmse:0.37600
+[257]   validation_0-rmse:0.50675   validation_1-rmse:0.37588
+[258]   validation_0-rmse:0.50682   validation_1-rmse:0.37566
+[259]   validation_0-rmse:0.50729   validation_1-rmse:0.37554
+[260]   validation_0-rmse:0.50752   validation_1-rmse:0.37546
+[261]   validation_0-rmse:0.50746   validation_1-rmse:0.37487
+[262]   validation_0-rmse:0.50729   validation_1-rmse:0.37473
+[263]   validation_0-rmse:0.50753   validation_1-rmse:0.37434
+[264]   validation_0-rmse:0.50776   validation_1-rmse:0.37429
+[265]   validation_0-rmse:0.50789   validation_1-rmse:0.37410
+[266]   validation_0-rmse:0.50809   validation_1-rmse:0.37379
+[267]   validation_0-rmse:0.50814   validation_1-rmse:0.37292
+[268]   validation_0-rmse:0.50841   validation_1-rmse:0.37285
+[269]   validation_0-rmse:0.50841   validation_1-rmse:0.37246
+[270]   validation_0-rmse:0.50802   validation_1-rmse:0.37192
+[271]   validation_0-rmse:0.50787   validation_1-rmse:0.37152
+[272]   validation_0-rmse:0.50777   validation_1-rmse:0.37123
+[273]   validation_0-rmse:0.50765   validation_1-rmse:0.37108
+[274]   validation_0-rmse:0.50747   validation_1-rmse:0.37087
+[275]   validation_0-rmse:0.50747   validation_1-rmse:0.37066
+[276]   validation_0-rmse:0.50745   validation_1-rmse:0.37034
+[277]   validation_0-rmse:0.50710   validation_1-rmse:0.36966
+[278]   validation_0-rmse:0.50682   validation_1-rmse:0.36927
+[279]   validation_0-rmse:0.50679   validation_1-rmse:0.36885
+[280]   validation_0-rmse:0.50687   validation_1-rmse:0.36850
+[281]   validation_0-rmse:0.50701   validation_1-rmse:0.36833
+[282]   validation_0-rmse:0.50709   validation_1-rmse:0.36829
+[283]   validation_0-rmse:0.50667   validation_1-rmse:0.36795
+[284]   validation_0-rmse:0.50668   validation_1-rmse:0.36758
+[285]   validation_0-rmse:0.50675   validation_1-rmse:0.36754
+[286]   validation_0-rmse:0.50649   validation_1-rmse:0.36733
+[287]   validation_0-rmse:0.50624   validation_1-rmse:0.36658
+[288]   validation_0-rmse:0.50634   validation_1-rmse:0.36654
+[289]   validation_0-rmse:0.50653   validation_1-rmse:0.36616
+[290]   validation_0-rmse:0.50684   validation_1-rmse:0.36555
+[291]   validation_0-rmse:0.50682   validation_1-rmse:0.36511
+[292]   validation_0-rmse:0.50649   validation_1-rmse:0.36464
+[293]   validation_0-rmse:0.50642   validation_1-rmse:0.36424
+[294]   validation_0-rmse:0.50644   validation_1-rmse:0.36413
+[295]   validation_0-rmse:0.50626   validation_1-rmse:0.36391
+[296]   validation_0-rmse:0.50650   validation_1-rmse:0.36387
+[297]   validation_0-rmse:0.50667   validation_1-rmse:0.36355
+[298]   validation_0-rmse:0.50666   validation_1-rmse:0.36351
+[299]   validation_0-rmse:0.50669   validation_1-rmse:0.36311
+[300]   validation_0-rmse:0.50662   validation_1-rmse:0.36294
+[301]   validation_0-rmse:0.50687   validation_1-rmse:0.36260
+[302]   validation_0-rmse:0.50710   validation_1-rmse:0.36243
+[303]   validation_0-rmse:0.50708   validation_1-rmse:0.36156
+[304]   validation_0-rmse:0.50723   validation_1-rmse:0.36100
+[305]   validation_0-rmse:0.50717   validation_1-rmse:0.36089
+[306]   validation_0-rmse:0.50733   validation_1-rmse:0.36083
+[307]   validation_0-rmse:0.50750   validation_1-rmse:0.36063
+[308]   validation_0-rmse:0.50776   validation_1-rmse:0.36044
+[309]   validation_0-rmse:0.50715   validation_1-rmse:0.35968
+[310]   validation_0-rmse:0.50708   validation_1-rmse:0.35962
+[311]   validation_0-rmse:0.50698   validation_1-rmse:0.35945
+[312]   validation_0-rmse:0.50699   validation_1-rmse:0.35927
+[313]   validation_0-rmse:0.50695   validation_1-rmse:0.35903
+[314]   validation_0-rmse:0.50692   validation_1-rmse:0.35887
+[315]   validation_0-rmse:0.50676   validation_1-rmse:0.35839
+[316]   validation_0-rmse:0.50680   validation_1-rmse:0.35808
+[317]   validation_0-rmse:0.50675   validation_1-rmse:0.35781
+[318]   validation_0-rmse:0.50674   validation_1-rmse:0.35775
+[319]   validation_0-rmse:0.50725   validation_1-rmse:0.35732
+[320]   validation_0-rmse:0.50705   validation_1-rmse:0.35706
+[321]   validation_0-rmse:0.50679   validation_1-rmse:0.35659
+[322]   validation_0-rmse:0.50657   validation_1-rmse:0.35645
+[323]   validation_0-rmse:0.50653   validation_1-rmse:0.35623
+[324]   validation_0-rmse:0.50659   validation_1-rmse:0.35569
+[325]   validation_0-rmse:0.50670   validation_1-rmse:0.35532
+[326]   validation_0-rmse:0.50671   validation_1-rmse:0.35497
+[327]   validation_0-rmse:0.50690   validation_1-rmse:0.35466
+[328]   validation_0-rmse:0.50688   validation_1-rmse:0.35426
+[329]   validation_0-rmse:0.50684   validation_1-rmse:0.35369
+[330]   validation_0-rmse:0.50676   validation_1-rmse:0.35343
+[331]   validation_0-rmse:0.50698   validation_1-rmse:0.35301
+[332]   validation_0-rmse:0.50722   validation_1-rmse:0.35252
+[333]   validation_0-rmse:0.50706   validation_1-rmse:0.35242
+[334]   validation_0-rmse:0.50729   validation_1-rmse:0.35198
+[335]   validation_0-rmse:0.50706   validation_1-rmse:0.35159
+[336]   validation_0-rmse:0.50729   validation_1-rmse:0.35121
+[337]   validation_0-rmse:0.50739   validation_1-rmse:0.35090
+[338]   validation_0-rmse:0.50760   validation_1-rmse:0.35063
+[339]   validation_0-rmse:0.50762   validation_1-rmse:0.35039
+[340]   validation_0-rmse:0.50761   validation_1-rmse:0.34996
+[341]   validation_0-rmse:0.50748   validation_1-rmse:0.34975
+[342]   validation_0-rmse:0.50738   validation_1-rmse:0.34940
+[343]   validation_0-rmse:0.50742   validation_1-rmse:0.34923
+[344]   validation_0-rmse:0.50740   validation_1-rmse:0.34901
+[345]   validation_0-rmse:0.50737   validation_1-rmse:0.34851
+[346]   validation_0-rmse:0.50737   validation_1-rmse:0.34832
+[347]   validation_0-rmse:0.50697   validation_1-rmse:0.34806
+[348]   validation_0-rmse:0.50713   validation_1-rmse:0.34796
+[349]   validation_0-rmse:0.50708   validation_1-rmse:0.34753
+[350]   validation_0-rmse:0.50708   validation_1-rmse:0.34751
+[351]   validation_0-rmse:0.50720   validation_1-rmse:0.34732
+[352]   validation_0-rmse:0.50697   validation_1-rmse:0.34709
+[353]   validation_0-rmse:0.50680   validation_1-rmse:0.34683
+[354]   validation_0-rmse:0.50695   validation_1-rmse:0.34677
+[355]   validation_0-rmse:0.50578   validation_1-rmse:0.34560
+[356]   validation_0-rmse:0.50589   validation_1-rmse:0.34525
+[357]   validation_0-rmse:0.50594   validation_1-rmse:0.34513
+[358]   validation_0-rmse:0.50607   validation_1-rmse:0.34484
+[359]   validation_0-rmse:0.50615   validation_1-rmse:0.34450
+[360]   validation_0-rmse:0.50599   validation_1-rmse:0.34417
+[361]   validation_0-rmse:0.50602   validation_1-rmse:0.34373
+[362]   validation_0-rmse:0.50618   validation_1-rmse:0.34336
+[363]   validation_0-rmse:0.50446   validation_1-rmse:0.34238
+[364]   validation_0-rmse:0.50483   validation_1-rmse:0.34211
+[365]   validation_0-rmse:0.50472   validation_1-rmse:0.34191
+[366]   validation_0-rmse:0.50444   validation_1-rmse:0.34153
+[367]   validation_0-rmse:0.50461   validation_1-rmse:0.34124
+[368]   validation_0-rmse:0.50466   validation_1-rmse:0.34090
+[369]   validation_0-rmse:0.50466   validation_1-rmse:0.34053
+[370]   validation_0-rmse:0.50453   validation_1-rmse:0.34005
+[371]   validation_0-rmse:0.50434   validation_1-rmse:0.33965
+[372]   validation_0-rmse:0.50432   validation_1-rmse:0.33960
+[373]   validation_0-rmse:0.50434   validation_1-rmse:0.33958
+[374]   validation_0-rmse:0.50440   validation_1-rmse:0.33918
+[375]   validation_0-rmse:0.50435   validation_1-rmse:0.33893
+[376]   validation_0-rmse:0.50407   validation_1-rmse:0.33872
+[377]   validation_0-rmse:0.50402   validation_1-rmse:0.33848
+[378]   validation_0-rmse:0.50400   validation_1-rmse:0.33843
+[379]   validation_0-rmse:0.50403   validation_1-rmse:0.33824
+[380]   validation_0-rmse:0.50391   validation_1-rmse:0.33819
+[381]   validation_0-rmse:0.50424   validation_1-rmse:0.33798
+[382]   validation_0-rmse:0.50405   validation_1-rmse:0.33776
+[383]   validation_0-rmse:0.50388   validation_1-rmse:0.33743
+[384]   validation_0-rmse:0.50389   validation_1-rmse:0.33711
+[385]   validation_0-rmse:0.50380   validation_1-rmse:0.33693
+[386]   validation_0-rmse:0.50386   validation_1-rmse:0.33629
+[387]   validation_0-rmse:0.50387   validation_1-rmse:0.33611
+[388]   validation_0-rmse:0.50402   validation_1-rmse:0.33589
+[389]   validation_0-rmse:0.50416   validation_1-rmse:0.33571
+[390]   validation_0-rmse:0.50413   validation_1-rmse:0.33546
+[391]   validation_0-rmse:0.50417   validation_1-rmse:0.33542
+[392]   validation_0-rmse:0.50408   validation_1-rmse:0.33537
+[393]   validation_0-rmse:0.50421   validation_1-rmse:0.33502
+[394]   validation_0-rmse:0.50429   validation_1-rmse:0.33493
+[395]   validation_0-rmse:0.50439   validation_1-rmse:0.33486
+[396]   validation_0-rmse:0.50440   validation_1-rmse:0.33459
+[397]   validation_0-rmse:0.50441   validation_1-rmse:0.33458
+[398]   validation_0-rmse:0.50435   validation_1-rmse:0.33385
+[399]   validation_0-rmse:0.50426   validation_1-rmse:0.33310
+[400]   validation_0-rmse:0.50404   validation_1-rmse:0.33274
+[401]   validation_0-rmse:0.50435   validation_1-rmse:0.33254
+[402]   validation_0-rmse:0.50441   validation_1-rmse:0.33228
+[403]   validation_0-rmse:0.50436   validation_1-rmse:0.33200
+[404]   validation_0-rmse:0.50448   validation_1-rmse:0.33163
+[405]   validation_0-rmse:0.50427   validation_1-rmse:0.33074
+[406]   validation_0-rmse:0.50436   validation_1-rmse:0.33068
+[407]   validation_0-rmse:0.50433   validation_1-rmse:0.33037
+[408]   validation_0-rmse:0.50419   validation_1-rmse:0.32966
+[409]   validation_0-rmse:0.50422   validation_1-rmse:0.32962
+[410]   validation_0-rmse:0.50424   validation_1-rmse:0.32959
+[411]   validation_0-rmse:0.50394   validation_1-rmse:0.32878
+[412]   validation_0-rmse:0.50400   validation_1-rmse:0.32877
+[413]   validation_0-rmse:0.50381   validation_1-rmse:0.32867
+[414]   validation_0-rmse:0.50355   validation_1-rmse:0.32802
+[415]   validation_0-rmse:0.50354   validation_1-rmse:0.32799
+[416]   validation_0-rmse:0.50337   validation_1-rmse:0.32784
+[417]   validation_0-rmse:0.50336   validation_1-rmse:0.32773
+[418]   validation_0-rmse:0.50331   validation_1-rmse:0.32728
+[419]   validation_0-rmse:0.50333   validation_1-rmse:0.32711
+[420]   validation_0-rmse:0.50353   validation_1-rmse:0.32680
+[421]   validation_0-rmse:0.50353   validation_1-rmse:0.32647
+[422]   validation_0-rmse:0.50342   validation_1-rmse:0.32638
+[423]   validation_0-rmse:0.50313   validation_1-rmse:0.32604
+[424]   validation_0-rmse:0.50320   validation_1-rmse:0.32580
+[425]   validation_0-rmse:0.50320   validation_1-rmse:0.32572
+[426]   validation_0-rmse:0.50318   validation_1-rmse:0.32554
+[427]   validation_0-rmse:0.50325   validation_1-rmse:0.32527
+[428]   validation_0-rmse:0.50355   validation_1-rmse:0.32501
+[429]   validation_0-rmse:0.50361   validation_1-rmse:0.32475
+[430]   validation_0-rmse:0.50387   validation_1-rmse:0.32464
+[431]   validation_0-rmse:0.50364   validation_1-rmse:0.32392
+[432]   validation_0-rmse:0.50362   validation_1-rmse:0.32375
+[433]   validation_0-rmse:0.50378   validation_1-rmse:0.32319
+[434]   validation_0-rmse:0.50379   validation_1-rmse:0.32308
+[435]   validation_0-rmse:0.50382   validation_1-rmse:0.32267
+[436]   validation_0-rmse:0.50367   validation_1-rmse:0.32247
+[437]   validation_0-rmse:0.50359   validation_1-rmse:0.32204
+[438]   validation_0-rmse:0.50379   validation_1-rmse:0.32158
+[439]   validation_0-rmse:0.50384   validation_1-rmse:0.32144
+[440]   validation_0-rmse:0.50389   validation_1-rmse:0.32128
+[441]   validation_0-rmse:0.50378   validation_1-rmse:0.32092
+[442]   validation_0-rmse:0.50391   validation_1-rmse:0.32060
+[443]   validation_0-rmse:0.50391   validation_1-rmse:0.32028
+[444]   validation_0-rmse:0.50388   validation_1-rmse:0.32003
+[445]   validation_0-rmse:0.50388   validation_1-rmse:0.31981
+[446]   validation_0-rmse:0.50397   validation_1-rmse:0.31964
+[447]   validation_0-rmse:0.50391   validation_1-rmse:0.31950
+[448]   validation_0-rmse:0.50412   validation_1-rmse:0.31921
+[449]   validation_0-rmse:0.50399   validation_1-rmse:0.31904
+[450]   validation_0-rmse:0.50411   validation_1-rmse:0.31869
+[451]   validation_0-rmse:0.50430   validation_1-rmse:0.31850
+[452]   validation_0-rmse:0.50428   validation_1-rmse:0.31813
+[453]   validation_0-rmse:0.50458   validation_1-rmse:0.31787
+[454]   validation_0-rmse:0.50456   validation_1-rmse:0.31772
+[455]   validation_0-rmse:0.50453   validation_1-rmse:0.31752
+[456]   validation_0-rmse:0.50452   validation_1-rmse:0.31742
+[457]   validation_0-rmse:0.50440   validation_1-rmse:0.31728
+[458]   validation_0-rmse:0.50436   validation_1-rmse:0.31705
+[459]   validation_0-rmse:0.50461   validation_1-rmse:0.31665
+[460]   validation_0-rmse:0.50488   validation_1-rmse:0.31649
+[461]   validation_0-rmse:0.50490   validation_1-rmse:0.31619
+[462]   validation_0-rmse:0.50512   validation_1-rmse:0.31600
+[463]   validation_0-rmse:0.50525   validation_1-rmse:0.31576
+[464]   validation_0-rmse:0.50526   validation_1-rmse:0.31548
+[465]   validation_0-rmse:0.50532   validation_1-rmse:0.31533
+[466]   validation_0-rmse:0.50528   validation_1-rmse:0.31511
+[467]   validation_0-rmse:0.50538   validation_1-rmse:0.31504
+[468]   validation_0-rmse:0.50531   validation_1-rmse:0.31472
+[469]   validation_0-rmse:0.50529   validation_1-rmse:0.31445
+[470]   validation_0-rmse:0.50515   validation_1-rmse:0.31419
+[471]   validation_0-rmse:0.50559   validation_1-rmse:0.31347
+[472]   validation_0-rmse:0.50574   validation_1-rmse:0.31322
+[473]   validation_0-rmse:0.50572   validation_1-rmse:0.31320
+[474]   validation_0-rmse:0.50584   validation_1-rmse:0.31291
+[475]   validation_0-rmse:0.50594   validation_1-rmse:0.31272
+[476]   validation_0-rmse:0.50600   validation_1-rmse:0.31238
+[477]   validation_0-rmse:0.50606   validation_1-rmse:0.31187
+[478]   validation_0-rmse:0.50609   validation_1-rmse:0.31138
+[479]   validation_0-rmse:0.50611   validation_1-rmse:0.31130
+[480]   validation_0-rmse:0.50610   validation_1-rmse:0.31089
+[481]   validation_0-rmse:0.50630   validation_1-rmse:0.31074
+[482]   validation_0-rmse:0.50644   validation_1-rmse:0.31038
+[483]   validation_0-rmse:0.50660   validation_1-rmse:0.31030
+[484]   validation_0-rmse:0.50663   validation_1-rmse:0.31022
+[485]   validation_0-rmse:0.50681   validation_1-rmse:0.30988
+[486]   validation_0-rmse:0.50692   validation_1-rmse:0.30943
+[487]   validation_0-rmse:0.50689   validation_1-rmse:0.30920
+[488]   validation_0-rmse:0.50672   validation_1-rmse:0.30893
+[489]   validation_0-rmse:0.50660   validation_1-rmse:0.30862
+[490]   validation_0-rmse:0.50685   validation_1-rmse:0.30841
+[491]   validation_0-rmse:0.50687   validation_1-rmse:0.30823
+[492]   validation_0-rmse:0.50706   validation_1-rmse:0.30781
+[493]   validation_0-rmse:0.50700   validation_1-rmse:0.30761
+[494]   validation_0-rmse:0.50763   validation_1-rmse:0.30735
+[495]   validation_0-rmse:0.50733   validation_1-rmse:0.30653
+[496]   validation_0-rmse:0.50738   validation_1-rmse:0.30639
+[497]   validation_0-rmse:0.50721   validation_1-rmse:0.30613
+[498]   validation_0-rmse:0.50720   validation_1-rmse:0.30609
+[499]   validation_0-rmse:0.50722   validation_1-rmse:0.30589</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<style>#sk-container-id-14 {color: black;background-color: white;}#sk-container-id-14 pre{padding: 0;}#sk-container-id-14 div.sk-toggleable {background-color: white;}#sk-container-id-14 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-14 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-14 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-14 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-14 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-14 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-14 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-14 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-14 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-14 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-14 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-14 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-14 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-14 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-14 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-14 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-14 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-14 div.sk-item {position: relative;z-index: 1;}#sk-container-id-14 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-14 div.sk-item::before, #sk-container-id-14 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-14 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-14 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-14 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-14 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-14 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-14 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-14 div.sk-label-container {text-align: center;}#sk-container-id-14 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-14 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-14" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>XGBRegressor(base_score=0.5, booster='gbtree', colsample_bylevel=1,
+             colsample_bynode=1, colsample_bytree=0.5, enable_categorical=False,
+             gamma=0, gpu_id=-1, importance_type=None,
+             interaction_constraints='', learning_rate=0.1, max_delta_step=0,
+             max_depth=4, min_child_weight=1, missing=nan,
+             monotone_constraints='()', n_estimators=500, n_jobs=8,
+             num_parallel_tree=1, predictor='auto', random_state=0, reg_alpha=0,
+             reg_lambda=1, scale_pos_weight=1, subsample=1, tree_method='exact',
+             validate_parameters=1, verbosity=None)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-14" type="checkbox" checked=""><label for="sk-estimator-id-14" class="sk-toggleable__label sk-toggleable__label-arrow">XGBRegressor</label><div class="sk-toggleable__content"><pre>XGBRegressor(base_score=0.5, booster='gbtree', colsample_bylevel=1,
+             colsample_bynode=1, colsample_bytree=0.5, enable_categorical=False,
+             gamma=0, gpu_id=-1, importance_type=None,
+             interaction_constraints='', learning_rate=0.1, max_delta_step=0,
+             max_depth=4, min_child_weight=1, missing=nan,
+             monotone_constraints='()', n_estimators=500, n_jobs=8,
+             num_parallel_tree=1, predictor='auto', random_state=0, reg_alpha=0,
+             reg_lambda=1, scale_pos_weight=1, subsample=1, tree_method='exact',
+             validate_parameters=1, verbosity=None)</pre></div></div></div></div></div>
+</div>
+</div>
+<div class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>evals <span class="op">=</span> reg.evals_result() <span class="co"># Get RMSEs</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>val_errors <span class="op">=</span> np.array(evals[<span class="st">"validation_0"</span>][<span class="st">"rmse"</span>]) <span class="co"># Convert validation errors to np array</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>train_errors <span class="op">=</span> np.array(evals[<span class="st">"validation_1"</span>][<span class="st">"rmse"</span>]) <span class="co"># Convert training errors to np array</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.plot(np.arange(<span class="dv">1</span>,<span class="bu">len</span>(val_errors)<span class="op">+</span><span class="dv">1</span>), val_errors, label <span class="op">=</span> <span class="st">"Validation error"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.plot(np.arange(<span class="dv">1</span>,<span class="bu">len</span>(train_errors)<span class="op">+</span><span class="dv">1</span>), train_errors, label <span class="op">=</span> <span class="st">"Training error"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Boosting iterations"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"RMSE"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"boost1.png"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>test_RMSE <span class="op">=</span> np.sqrt(np.mean((reg.predict(X_test)<span class="op">-</span>y_test)<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>test_R2 <span class="op">=</span> <span class="dv">1</span><span class="op">-</span>test_RMSE<span class="op">**</span><span class="dv">2</span><span class="op">/</span>np.var(y_test)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_RMSE, test_R2, np.var(y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.5192326874307802 0.3524055230553442 0.4163139021329715</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Consider symmetric grid for # features to be checked per tree</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Default learning rate 0.3, make a grid containing this</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Logarithmic lambda_grid </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># n_estimator (boosting rounds) seem to stabilize after 300-400 rounds. Make grid centered arround 500 containing these</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Try trees of depth 1-7</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os.path</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> joblib <span class="im">import</span> dump,load</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(os.path.isfile(<span class="st">"xgb_cv_1.joblib"</span>)): <span class="co"># Check if model exists and load model if it does. Done because cv takes quite a lot of time</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    xgb_cv <span class="op">=</span> load(<span class="st">"xgb_cv_1.joblib"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> xgb.XGBRegressor() <span class="co"># Initialise XGBRegressor</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    paramgrid <span class="op">=</span> {<span class="st">"colsample_bytree"</span>: np.array([<span class="fl">0.3</span>,<span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span>]), <span class="st">"learning_rate"</span>: np.array([<span class="fl">0.05</span>, <span class="fl">0.1</span>,<span class="fl">0.2</span>,<span class="fl">0.3</span>]),</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="st">"reg_lambda"</span>: np.array([<span class="fl">0.01</span>,<span class="fl">0.1</span>,<span class="dv">1</span>,<span class="dv">10</span>,<span class="dv">100</span>]), <span class="st">"n_estimators"</span> : np.array([<span class="dv">300</span>,<span class="dv">400</span>,<span class="dv">500</span>]),<span class="st">"max_depth"</span>: np.array([<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>])} <span class="co"># setup parametergrid</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    model_CV <span class="op">=</span> GridSearchCV(model, param_grid<span class="op">=</span>paramgrid, verbose<span class="op">=</span><span class="dv">1</span>, cv <span class="op">=</span> <span class="dv">3</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    model_CV.fit(X_train, y_train)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    dump(model_CV, <span class="st">"xgb_cv_1.joblib"</span>) <span class="co">#Dump for later use</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>test_RMSE_cv <span class="op">=</span> np.sqrt(np.mean((xgb_cv.predict(X_test)<span class="op">-</span>y_test)<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>test_R2_cv <span class="op">=</span> <span class="dv">1</span><span class="op">-</span>test_RMSE_cv<span class="op">**</span><span class="dv">2</span><span class="op">/</span>np.var(y_test)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test_RMSE_cv, test_R2_cv, np.var(y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.5038327385764918 0.3902499360196523 0.4163139021329715</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsRegressor</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>knn <span class="op">=</span> KNeighborsRegressor()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>knn.fit(X_train, y_train)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>knn_RMSE <span class="op">=</span> np.sqrt(np.mean((knn.predict(X_test)<span class="op">-</span>y_test)<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>knn_R2 <span class="op">=</span> <span class="dv">1</span><span class="op">-</span>knn_RMSE<span class="op">**</span><span class="dv">2</span><span class="op">/</span>np.var(y_test)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(knn_RMSE, knn_R2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.49341186931168185 0.41521224362118925 0.4163139021329715</code></pre>
+</div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
